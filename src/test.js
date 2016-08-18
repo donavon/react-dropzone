@@ -96,11 +96,11 @@ describe('Dropzone', () => {
           <div className="dropzone-content">some content</div>
         </Dropzone>
       );
-      spy(dropzone, 'open');
+      spy(dropzone.fileInputEl, 'click');
       const content = TestUtils.findRenderedDOMComponentWithClass(dropzone, 'dropzone-content');
 
       TestUtils.Simulate.click(content);
-      expect(dropzone.open.callCount).to.equal(0);
+      expect(dropzone.fileInputEl.click.callCount).to.equal(0);
     });
 
     it('calls `open` if disableClick is not provided', () => {
@@ -109,11 +109,11 @@ describe('Dropzone', () => {
           <div className="dropzone-content">some content</div>
         </Dropzone>
       );
-      spy(dropzone, 'open');
+      spy(dropzone.fileInputEl, 'click');
       const content = TestUtils.findRenderedDOMComponentWithClass(dropzone, 'dropzone-content');
 
       TestUtils.Simulate.click(content);
-      expect(dropzone.open.callCount).to.equal(1);
+      expect(dropzone.fileInputEl.click.callCount).to.equal(1);
     });
 
     it('renders dynamic props on the root element', () => {
