@@ -6,16 +6,18 @@ import React from 'react';
 const supportMultiple = (typeof document !== 'undefined' && document && document.createElement) ?
   'multiple' in document.createElement('input') :
   true;
+const noop = () => {};
 
 class Dropzone extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.onClick = this.onClick.bind(this);
+    this.open = this.open.bind(this);
     this.onDragStart = this.onDragStart.bind(this);
     this.onDragEnter = this.onDragEnter.bind(this);
     this.onDragLeave = this.onDragLeave.bind(this);
     this.onDragOver = this.onDragOver.bind(this);
     this.onDrop = this.onDrop.bind(this);
+    this.setOnClick(props);
 
     this.state = {
       isDragActive: false
@@ -24,6 +26,10 @@ class Dropzone extends React.Component {
 
   componentDidMount() {
     this.enterCounter = 0;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setOnClick(nextProps);
   }
 
   onDragStart(e) {
@@ -118,10 +124,8 @@ class Dropzone extends React.Component {
     }
   }
 
-  onClick() {
-    if (!this.props.disableClick) {
-      this.open();
-    }
+  setOnClick(props) {
+    this.onClick = props.disableClick ? noop : this.open;
   }
 
   allFilesAccepted(files) {
